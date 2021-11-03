@@ -34,7 +34,6 @@ int main()
 
     ldc_del(list);
 
-    printf("Fin du programme.\n");
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
