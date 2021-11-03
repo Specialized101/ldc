@@ -33,7 +33,8 @@ int main()
     ldc_display_asc(list);
 
     ldc_del(list);
-
+    
+    // test 
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
