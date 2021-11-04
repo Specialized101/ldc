@@ -9,20 +9,18 @@
 int main()
 {
     struct Ldc* list;
-    struct Client* client1, * client2, * client3, * client4, * client5;
+    struct Client* client1, * client2, * client3, * client4;
 
     list = ldc_new();
 
     client1 = client_new("Einstein", "Albert", 1);
     client2 = client_new("Newton", "Isaac", 2);
     client3 = client_new("Turing", "Alan", 3);
-    client4 = client_new("Fares", "Raja", 4);
-    client5 = client_new("Fares", "Yassine", 5);
+    client4 = client_new("Hubblie", "Edwin", 4);
 
     ldc_insert_client(list, client1, -100);
     ldc_insert_client(list, client2, -50); 
     ldc_insert_client(list, client3, 300);
-    ldc_insert_client(list, client5, 500);
     ldc_insert_client(list, client4, 400);
 
     ldc_display_asc(list);
@@ -33,8 +31,7 @@ int main()
     ldc_display_asc(list);
 
     ldc_del(list);
-    
-    // test 
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

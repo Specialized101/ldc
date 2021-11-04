@@ -1,7 +1,7 @@
 #pragma once
 
-#include "ldc.h"
 #include "cell.h"
+#include "client.h"
 
 struct Ldc* ldc_new(void);
 struct Ldc* ldc_insert_client(struct Ldc* p_list, struct Client* p_client, int key);
