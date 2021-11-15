@@ -56,39 +56,50 @@ struct Ldc* ldc_insert_client(struct Ldc* p_list, struct Client* p_client) {
 
 	if (p_list != NULL) {
 
-		/* Rechercher la cellule courante = dont la clé est strictement supérieur à celle donnée en parametre
+		/* Verifier si le client que l'on souhaite inserer n'est pas deja present dans la liste */
+
+		if (ldc_is_client_in_list(p_list, p_client) == 0) {
+
+			/* Rechercher la cellule courante = dont la clé est strictement supérieur à celle donnée en parametre
 		   Debuter la recherche à la cellule qui suit la cellule de tete de liste (head) */
 
-		struct Cell* p_temp = p_list->p_head->p_next; 
+			struct Cell* p_temp = p_list->p_head->p_next;
 
-		/* Si le pointeur droit de la cellule en cours (temp) est NULL -> temp = tail, fin de boucle 
-		OU
-		   Si la clé de temp est strictement superieur à la clé donnée en parametre, fin de boucle */
+			/* Si le pointeur droit de la cellule en cours (temp) est NULL -> temp = tail, fin de boucle
+			OU
+			   Si le num_client dans la cellule courante est strictement superieur au num_client à inserer, fin de boucle */
 
-		while (p_temp->p_next != NULL && p_temp->client->num_client <= p_client->num_client) { 
-			
-			/* Passer de cellule en cellule */
+			while (p_temp->p_next != NULL && p_temp->client->num_client <= p_client->num_client) {
 
-			p_temp = p_temp->p_next;
+				/* Passer de cellule en cellule */
+
+				p_temp = p_temp->p_next;
+
+			}
+
+			/* Creer une nouvelle cellule qui va contenir la client à inserer */
+
+			struct Cell* p_new = cell_new(p_client);
+
+			if (p_new != NULL) {
+
+				/* Mettre à jour les chainages */
+
+				p_new->p_next = p_temp;
+				p_new->p_prev = p_temp->p_prev;
+				p_temp->p_prev->p_next = p_new;
+				p_temp->p_prev = p_new;
+
+				/* Incrementer la longueur de la liste */
+
+				p_list->length++;
+
+			}
 
 		}
+		else {
 
-		/* Creer une nouvelle cellule qui va contenir la client à inserer */
-
-		struct Cell* p_new = cell_new(p_client);
-
-		if (p_new != NULL) {
-
-			/* Mettre à jour les chainages */
-
-			p_new->p_next = p_temp; 
-			p_new->p_prev = p_temp->p_prev;
-			p_temp->p_prev->p_next = p_new;
-			p_temp->p_prev = p_new;
-
-			/* Incrementer la longueur de la liste */
-
-			p_list->length++;
+			printf("\nLe client n'a pas pu etre ajoute, il est deja dans la liste.\n");
 
 		}
 
@@ -104,59 +115,104 @@ struct Ldc* ldc_remove_client(struct Ldc* p_list, struct Client* p_client) {
 
 	if (p_list != NULL) {
 
-		/* Rechercher la cellule contenant le client à supprimer:
+		/* Verifier si le client à supprimer est bien present dans la liste */
+
+		if (ldc_is_client_in_list(p_list, p_client) == 1) {
+
+			/* Rechercher la cellule contenant le client à supprimer:
 		   Debuter la recherche à la cellule suivant la tete de liste */
 
-		struct Cell* p_temp = p_list->p_head->p_next;
-		int found = 0;
+			struct Cell* p_temp = p_list->p_head->p_next;
+			int found = 0;
 
-		/* Fin de boucle quand la cellule recherchée est trouvée ou que la cellule est cours n'existe pas */
+			/* Fin de boucle quand la cellule recherchée est trouvée ou que la cellule est cours n'existe pas */
 
-		while (p_temp != NULL && found == 0) {
+			while (p_temp != NULL && found == 0) {
 
-			/* Verifier si le numero client du client donnée en parametre correspond à celui de la
-			   cellule en cours */
+				/* Verifier si le numero client du client donnée en parametre correspond à celui de la
+				   cellule en cours */
 
-			if (p_temp->client->num_client == p_client->num_client) { 
+				if (p_temp->client->num_client == p_client->num_client) {
 
-				/* Mettre à jour les chainages "comme si la cellule à supprimer n'existait plus" 
-				   1- La cellule qui suit la cellule courante (temp) doit pointer vers cell qui precede temp
-				   2- La cellule qui precede temp doit pointer vers celle qui suit temp 
-				*/
+					/* Mettre à jour les chainages "comme si la cellule à supprimer n'existait plus"
+					   1- La cellule qui suit la cellule courante (temp) doit pointer vers cell qui precede temp
+					   2- La cellule qui precede temp doit pointer vers celle qui suit temp
+					*/
 
-				p_temp->p_next->p_prev = p_temp->p_prev;
-				p_temp->p_prev->p_next = p_temp->p_next;
+					p_temp->p_next->p_prev = p_temp->p_prev;
+					p_temp->p_prev->p_next = p_temp->p_next;
 
-				/* Supprimer le client contenu dans la cellule courante */
+					/* Supprimer le client contenu dans la cellule courante */
 
-				client_del(p_temp->client);
+					client_del(p_temp->client);
 
-				/* Supprimer la cellule courante, qui contenait le client */
+					/* Supprimer la cellule courante, qui contenait le client */
 
-				cell_del(p_temp);
+					cell_del(p_temp);
 
-				/* Decrementer la longueur de la liste */
+					/* Decrementer la longueur de la liste */
 
-				p_list->length--;
+					p_list->length--;
 
-				/* Sortir de la boucle */
+					/* Sortir de la boucle */
 
-				found = 1;
+					found = 1;
+
+				}
+				else {
+
+					/* Si les numeros client ne correspondent pas, passer à la cellule suivante */
+
+					p_temp = p_temp->p_next;
+
+				}
 
 			}
-			else {
 
-				/* Si les numeros client ne correspondent pas, passer à la cellule suivante */
+		}
+		else {
 
-				p_temp = p_temp->p_next;
-
-			}
+			printf("\nLe client n'a pas pu etre supprime, il n'est pas dans la liste.\n");
 
 		}
 
 	}
 
 	return p_list;
+
+}
+
+int ldc_is_client_in_list(struct Ldc* p_list, struct Client* p_client) {
+
+	/* Demarrer la recherche de correspondance à la cellule suivante la cellule vide de tete de liste */
+
+	struct Cell* temp = p_list->p_head->p_next;
+
+	int found = 0;
+
+	/* Boucler autant de fois qu'il y a de clients de la liste (-2 cellules vides) */
+
+	for (int i = 0; i < p_list->length - 2; i++) {
+
+		if (temp->client->num_client == p_client->num_client) {
+
+			/* Si les numeros clients correspondent, le client à supprimer est present, sortie de boucle */
+
+			found = 1;
+
+		}
+
+		/* Passer à la cellule suivante */
+
+		temp = temp->p_next;
+
+	}
+
+	/* return 0: Le client n'est pas present dans la liste
+	   return 1: le client est present dans la liste
+	*/
+
+	return found;
 
 }
 
@@ -187,7 +243,7 @@ void ldc_display_asc(struct Ldc* p_list) {
 	}
 	else {
 
-		printf("La liste est vide.\n");
+		printf("\nLa liste est vide.\n");
 
 	}
 
@@ -216,7 +272,7 @@ void ldc_display_desc(struct Ldc* p_list) {
 	}
 	else {
 
-		printf("La liste est vide.\n");
+		printf("\nLa liste est vide.\n");
 
 	}
 
