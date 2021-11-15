@@ -50,7 +50,7 @@ struct Ldc* ldc_new() {
 
 }
 
-struct Ldc* ldc_insert_client(struct Ldc* p_list, struct Client* p_client, int key) {
+struct Ldc* ldc_insert_client(struct Ldc* p_list, struct Client* p_client) {
 
 	/* FONCTION d'INSERTION D'UN CLIENT DANS UNE LISTE EN FONCTION D'UNE CLE */
 
@@ -65,7 +65,7 @@ struct Ldc* ldc_insert_client(struct Ldc* p_list, struct Client* p_client, int k
 		OU
 		   Si la clé de temp est strictement superieur à la clé donnée en parametre, fin de boucle */
 
-		while (p_temp->p_next != NULL && p_temp->key <= key) { 
+		while (p_temp->p_next != NULL && p_temp->client->num_client <= p_client->num_client) { 
 			
 			/* Passer de cellule en cellule */
 
@@ -75,7 +75,7 @@ struct Ldc* ldc_insert_client(struct Ldc* p_list, struct Client* p_client, int k
 
 		/* Creer une nouvelle cellule qui va contenir la client à inserer */
 
-		struct Cell* p_new = cell_new(p_client, key);
+		struct Cell* p_new = cell_new(p_client);
 
 		if (p_new != NULL) {
 
@@ -180,7 +180,6 @@ void ldc_display_asc(struct Ldc* p_list) {
 			printf("Prenom: %s\n", p_temp->client->prenom);
 			printf("Numero_client: %d\n", p_temp->client->num_client);
 
-			printf("Cell_Key: %d\n", p_temp->key);
 			p_temp = p_temp->p_next;
 
 		}
@@ -210,7 +209,6 @@ void ldc_display_desc(struct Ldc* p_list) {
 			printf("Prenom: %s\n", p_temp->client->prenom);
 			printf("Numero_client: %d\n", p_temp->client->num_client);
 
-			printf("Cell_Key: %d\n", p_temp->key);
 			p_temp = p_temp->p_prev;
 
 		}

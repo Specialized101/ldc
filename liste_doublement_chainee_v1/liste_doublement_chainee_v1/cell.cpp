@@ -12,7 +12,7 @@ struct Cell* cell_new_empty_cells() {
 	return p_new;
 }
 
-struct Cell* cell_new(struct Client* p_client, int key) {
+struct Cell* cell_new(struct Client* p_client) {
 
 	/* Allouer un espace memoire pour une nouvelle cellule */
 
@@ -25,7 +25,6 @@ struct Cell* cell_new(struct Client* p_client, int key) {
 		/* Initialiser les données membres de nouvelle cellule avec le client et la clé donnés en parametre */
 
 		p_new->client = p_client;
-		p_new->key = key;
 		p_new->p_next = NULL;
 		p_new->p_prev = NULL;
 

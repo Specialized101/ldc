@@ -9,7 +9,7 @@
 int main()
 {
     struct Ldc* list;
-    struct Client* client1, * client2, * client3, * client4;
+    struct Client* client1, * client2, * client3, * client4, * client5;
 
     list = ldc_new();
 
@@ -17,11 +17,13 @@ int main()
     client2 = client_new("Newton", "Isaac", 2);
     client3 = client_new("Turing", "Alan", 3);
     client4 = client_new("Hubblie", "Edwin", 4);
+    client5 = client_new("Fares", "Yassine", 0);
 
-    ldc_insert_client(list, client1, -100);
-    ldc_insert_client(list, client2, -50); 
-    ldc_insert_client(list, client3, 300);
-    ldc_insert_client(list, client4, 400);
+    ldc_insert_client(list, client1);
+    ldc_insert_client(list, client2); 
+    ldc_insert_client(list, client3);
+    ldc_insert_client(list, client4);
+    ldc_insert_client(list, client5);
 
     ldc_display_asc(list);
     //ldc_display_desc(list);
