@@ -9,6 +9,15 @@ struct Cell* cell_new_empty_cells() {
 
 	struct Cell* p_new = (struct Cell*)malloc(sizeof(*p_new));
 
+	/* Verifier si la call malloc a fonctionné */
+
+	if (p_new != NULL) {
+
+		p_new->p_next = NULL;
+		p_new->p_prev = NULL;
+
+	}
+
 	return p_new;
 }
 
@@ -31,6 +40,19 @@ struct Cell* cell_new(struct Client* p_client) {
 	}
 
 	return p_new;
+
+}
+
+void cell_pointing_each_other(struct Cell* p_head, struct Cell* p_tail) {
+
+	p_head->p_next = p_tail;
+	p_tail->p_prev = p_head;
+
+}
+
+struct Cell* cell_return_next(struct Cell* p_cell) {
+
+	return p_cell->p_next;
 
 }
 

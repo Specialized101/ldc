@@ -36,13 +36,9 @@ struct Ldc* ldc_new() {
 			      NULL <-- head <--> tail --> NULL 
 		   Incrementer la longueur de la liste apres chaque ajout de cellule */
 
-		p_new->p_head->p_prev = NULL;
-		p_new->p_head->p_next = p_new->p_tail;
-		p_new->length++;
-
-		p_new->p_tail->p_next = NULL;
-		p_new->p_tail->p_prev = p_new->p_head;
-		p_new->length++;
+		
+		cell_pointing_each_other(p_new->p_head, p_new->p_tail);
+		p_new->length = 2;
 
 	}
 
@@ -63,7 +59,7 @@ struct Ldc* ldc_insert_client(struct Ldc* p_list, struct Client* p_client) {
 			/* Rechercher la cellule courante = dont la clé est strictement supérieur à celle donnée en parametre
 		   Debuter la recherche à la cellule qui suit la cellule de tete de liste (head) */
 
-			struct Cell* p_temp = p_list->p_head->p_next;
+			struct Cell* p_temp = cell_return_next(p_list->p_head);
 
 			/* Si le pointeur droit de la cellule en cours (temp) est NULL -> temp = tail, fin de boucle
 			OU
@@ -73,7 +69,7 @@ struct Ldc* ldc_insert_client(struct Ldc* p_list, struct Client* p_client) {
 
 				/* Passer de cellule en cellule */
 
-				p_temp = p_temp->p_next;
+				p_temp = cell_return_next(p_temp);
 
 			}
 
