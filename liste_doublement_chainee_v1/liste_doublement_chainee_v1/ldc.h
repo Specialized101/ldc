@@ -6,7 +6,7 @@
 struct Ldc* ldc_new(void);
 struct Ldc* ldc_insert_client(struct Ldc* p_list, struct Client* p_client);
 struct Ldc* ldc_remove_client(struct Ldc* p_list,struct Client* p_client);
-int ldc_is_client_in_list(struct Ldc* p_list, struct Client* p_client);
+int ldc_is_client_in_list(struct Ldc* p_list, struct Client* p_client); 
 void ldc_display_asc(struct Ldc* p_list);
 void ldc_display_desc(struct Ldc* p_list);
 struct Ldc* ldc_del(struct Ldc* p_list);

@@ -28,6 +28,23 @@ struct Client* client_new(const char* nom, const char* prenom, int num_client) {
 
 }
 
+int* client_get_id(struct Client* p_client) {
+
+	return &p_client->num_client;
+
+}
+
+char* client_get_firstname(struct Client* p_client) {
+
+	return p_client->prenom;
+
+}
+char* client_get_lastname(struct Client* p_client) {
+
+	return p_client->nom;
+
+}
+
 struct Client* client_del(struct Client* p_client) {
 
 	if (p_client != NULL) {

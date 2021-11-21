@@ -5,6 +5,9 @@
 
 
 struct Client* client_new(const char* nom, const char* prenom, int num_client);
+int* client_get_id(struct Client* p_client);
+char* client_get_firstname(struct Client* p_client);
+char* client_get_lastname(struct Client* p_client);
 struct Client* client_del(struct Client* p_client);
 
 struct Client {

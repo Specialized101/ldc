@@ -56,6 +56,39 @@ struct Cell* cell_return_next(struct Cell* p_cell) {
 
 }
 
+struct Cell* cell_return_prev(struct Cell* p_cell) {
+
+	return p_cell->p_prev;
+
+}
+
+void cell_chaining_update_after_insertion(struct Cell* p_current, struct Cell* p_new) {
+
+	p_new->p_next = p_current;
+	p_new->p_prev = p_current->p_prev;
+	p_current->p_prev->p_next = p_new;
+	p_current->p_prev = p_new;
+
+}
+
+void cell_chaining_update_before_deletion(struct Cell* p_cell) {
+
+	/* Mettre à jour les chainages "comme si la cellule à supprimer n'existait plus"
+					   1- La cellule qui suit la cellule courante (temp) doit pointer vers cell qui precede temp
+					   2- La cellule qui precede temp doit pointer vers celle qui suit temp
+	*/
+
+	p_cell->p_next->p_prev = p_cell->p_prev;
+	p_cell->p_prev->p_next = p_cell->p_next;
+
+}
+
+struct Client* cell_get_client(struct Cell* p_cell) {
+
+	return p_cell->client;
+
+}
+
 struct Cell* cell_del(struct Cell* p_cell) {
 
 	if (p_cell != NULL) {
