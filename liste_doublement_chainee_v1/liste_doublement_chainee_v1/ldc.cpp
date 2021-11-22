@@ -27,8 +27,8 @@ struct Ldc* ldc_new() {
 	/* Creer les cellules fictives de debut et fin de liste
 	   Et recupérer les adresses retrournées dans les données membres correspondantes de la nouvelle liste */
 
-	p_new->p_head = cell_new_empty_cells();
-	p_new->p_tail = cell_new_empty_cells();
+	p_new->p_head = cell_new(NULL);
+	p_new->p_tail = cell_new(NULL);
 
 	if (p_new->p_head != NULL && p_new->p_tail != NULL) {
 

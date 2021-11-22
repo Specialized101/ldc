@@ -32,7 +32,7 @@ int main()
     ldc_display_desc(list);
 
     ldc_remove_client(list, client1);
-    ldc_remove_client(list, client2);
+    ldc_remove_client(list, client4);
 
     ldc_display_asc(list);
 
