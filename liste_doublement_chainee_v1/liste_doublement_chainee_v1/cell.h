@@ -9,6 +9,7 @@ void cell_chaining_update_before_deletion(struct Cell* p_cell);
 struct Client* cell_get_client(struct Cell* p_cell);
 struct Cell* cell_return_next(struct Cell* p_cell);
 struct Cell* cell_return_prev(struct Cell* p_cell);
+void cell_display(struct Cell* p_cell);
 struct Cell* cell_del(struct Cell* p_cell);
 
 struct Cell {

@@ -13,15 +13,9 @@ struct Cell* cell_new(struct Client* p_client) {
 
 	if (p_new != NULL) {
 
-		/* Initialiser les données membres de nouvelle cellule avec le client et la clé donnés en parametre */
+		/* Initialiser les données membres de nouvelle cellule avec le client donnée en parametre */
 
-		/* Si p_client est NULL, cellule vide, pas de client */
-
-		if (p_client != NULL)
-
-			p_new->client = p_client;
-
-		
+		p_new->client = p_client;
 		p_new->p_next = NULL;
 		p_new->p_prev = NULL;
 
@@ -77,9 +71,17 @@ struct Client* cell_get_client(struct Cell* p_cell) {
 
 }
 
+void cell_display(struct Cell* p_cell) {
+
+	client_display(p_cell->client);
+
+}
+
 struct Cell* cell_del(struct Cell* p_cell) {
 
 	if (p_cell != NULL) {
+
+		client_del(p_cell->client);
 
 		free(p_cell);
 		p_cell = NULL;

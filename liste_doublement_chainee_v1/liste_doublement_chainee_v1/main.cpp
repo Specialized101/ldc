@@ -28,10 +28,11 @@ int main()
     ldc_insert_client(list, client5);
     ldc_insert_client(list, client6);
 
-    //ldc_display_asc(list);
-    ldc_display_desc(list);
+    ldc_display_asc(list);
+    //ldc_display_desc(list);
 
     ldc_remove_client(list, client1);
+    ldc_remove_client(list, client2);
     ldc_remove_client(list, client4);
 
     ldc_display_asc(list);

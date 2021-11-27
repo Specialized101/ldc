@@ -45,6 +45,26 @@ char* client_get_lastname(struct Client* p_client) {
 
 }
 
+int client_compare(struct Client* p_client1, struct Client* p_client2) {
+
+	if (p_client1->num_client < p_client2->num_client)
+		return -1;
+
+	else if (p_client1->num_client > p_client2->num_client)
+		return 1;
+
+	return 0;
+
+}
+
+void client_display(struct Client* p_client) {
+
+	printf("\nNom: %s\n", p_client->nom);
+	printf("Prenom: %s\n", p_client->prenom);
+	printf("Numero_client: %d\n", p_client->num_client);
+
+}
+
 struct Client* client_del(struct Client* p_client) {
 
 	if (p_client != NULL) {

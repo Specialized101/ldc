@@ -64,9 +64,17 @@ struct Ldc* ldc_insert_client(struct Ldc* p_list, struct Client* p_client) {
 			OU
 			   Si le num_client dans la cellule courante est strictement superieur au num_client à inserer, fin de boucle */
 
-			while (p_temp != p_list->p_tail || client_get_id(cell_get_client(p_temp)) <= client_get_id(p_client)) {
+			int found = 0;
 
-				/* Passer de cellule en cellule */
+			for (int i = 0; i < p_list->length - 2 || found == 1; i++) {
+
+				if (client_compare(cell_get_client(p_temp), p_client) == 1) { 
+
+					found = 1;
+
+				}
+
+				/* Passer à la cellule suivante */
 
 				p_temp = cell_return_next(p_temp);
 
@@ -124,17 +132,13 @@ struct Ldc* ldc_remove_client(struct Ldc* p_list, struct Client* p_client) {
 				/* Verifier si le numero client du client donnée en parametre correspond à celui de la
 				   cellule en cours */
 
-				if (client_get_id(cell_get_client(p_temp)) == client_get_id(p_client)) {
+				if (client_compare(p_client, cell_get_client(p_temp)) == 0) {
 
 					/* Mettre à jour les chainages */
 
 					cell_chaining_update_before_deletion(p_temp);
 
-					/* Supprimer le client contenu dans la cellule courante */
-
-					client_del(cell_get_client(p_temp));
-
-					/* Supprimer la cellule courante, qui contenait le client */
+					/* Supprimer la cellule courante */
 
 					cell_del(p_temp);
 
@@ -182,8 +186,8 @@ int ldc_is_client_in_list(struct Ldc* p_list, struct Client* p_client) {
 
 	for (int i = 0; i < p_list->length - 2; i++) {
 
-		if (client_get_id(cell_get_client(p_temp)) == client_get_id(p_client)) {
-
+		if (client_compare(p_client, cell_get_client(p_temp)) == 0) {
+			
 			/* Si les numeros clients correspondent, le client est present dans la liste, sortie de boucle */
 
 			found = 1;
@@ -220,9 +224,7 @@ void ldc_display_asc(struct Ldc* p_list) {
 
 		for (int i = 0; i < p_list->length - 2; i++) {
 
-			printf("\nNom: %s\n", client_get_lastname(cell_get_client(p_temp)));
-			printf("Prenom: %s\n", client_get_firstname(cell_get_client(p_temp)));
-			printf("Numero_client: %d\n", *client_get_id(cell_get_client(p_temp)));
+			cell_display(p_temp);
 
 			p_temp = cell_return_next(p_temp);
 
@@ -249,9 +251,7 @@ void ldc_display_desc(struct Ldc* p_list) {
 
 		for (int i = 0; i < p_list->length - 2; i++) {
 
-			printf("\nNom: %s\n", client_get_lastname(cell_get_client(p_temp)));
-			printf("Prenom: %s\n", client_get_firstname(cell_get_client(p_temp)));
-			printf("Numero_client: %d\n", *client_get_id(cell_get_client(p_temp)));
+			cell_display(p_temp);
 
 			p_temp = cell_return_prev(p_temp);
 
@@ -292,7 +292,6 @@ struct Ldc* ldc_del(struct Ldc* p_list) {
 
 			/* 3- Supprimer le client puis la cellule courante */
 
-			client_del(cell_get_client(p_del));
 			cell_del(p_del);
 
 		}
