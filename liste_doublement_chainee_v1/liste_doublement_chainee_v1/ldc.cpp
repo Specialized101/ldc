@@ -64,21 +64,11 @@ struct Ldc* ldc_insert_client(struct Ldc* p_list, struct Client* p_client) {
 			OU
 			   Si le num_client dans la cellule courante est strictement superieur au num_client à inserer, fin de boucle */
 
-			int found = 0;
 
-			for (int i = 0; i < p_list->length - 2 || found == 1; i++) {
-
-				if (client_compare(cell_get_client(p_temp), p_client) == 1) { 
-
-					found = 1;
-
-				}
-
-				/* Passer à la cellule suivante */
+			while (p_temp != p_list->p_tail && client_compare(p_client, cell_get_client(p_temp)) >= 0)
 
 				p_temp = cell_return_next(p_temp);
 
-			}
 
 			/* Creer une nouvelle cellule qui va contenir la client à inserer */
 
